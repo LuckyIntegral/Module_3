@@ -20,7 +20,6 @@ public class Transaction extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
-    @Column(nullable = false)
     @ManyToOne
     private Account account;
     public Transaction() {

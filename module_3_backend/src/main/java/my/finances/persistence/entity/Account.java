@@ -18,7 +18,6 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     @ManyToOne
     private User owner;
 

@@ -48,11 +48,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public Account findById(Long id) {
-        if (accountRepository.findById(id).isPresent()) {
-            return accountRepository.findById(id).get();
-        } else {
-            throw new EntityNotFoundException("Entity doesn't exist");
-        }
+        return accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity doesn't exist"));
     }
 
     @Transactional
@@ -78,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(Long id) {
         if (accountRepository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("Owner doesn't exist");
+            throw new EntityNotFoundException("Entity doesn't exist");
         } else {
             transactionRepository.findAllByAccountId(id).forEach(e -> transactionRepository.deleteById(e.getId()));
             accountRepository.deleteById(id);

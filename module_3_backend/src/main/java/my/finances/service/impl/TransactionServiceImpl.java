@@ -49,11 +49,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction findById(Long id) {
-        if (transactionRepository.findById(id).isPresent()) {
-            return transactionRepository.findById(id).get();
-        } else {
-            throw new EntityNotFoundException("Entity doesn't exist");
-        }
+        return transactionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity doesn't exist"));
     }
 
     @Override

@@ -65,10 +65,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void update(Account entity, Long id) {
         checkAccountData(entity);
-        if (userRepository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("Owner doesn't exist");
+        if (accountRepository.findById(id).isEmpty()) {
+            throw new EntityNotFoundException("Entity doesn't exist");
         } else {
-            entity.setOwner(userRepository.findById(id).get());
+            entity.setId(id);
+            entity.setOwner(accountRepository.findById(id).get().getOwner());
             accountRepository.save(entity);
         }
     }
@@ -76,10 +77,10 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void delete(Long id) {
-        if (userRepository.findById(id).isEmpty()) {
+        if (accountRepository.findById(id).isEmpty()) {
             throw new EntityNotFoundException("Owner doesn't exist");
         } else {
-            transactionRepository.deleteAllByAccountId(id);
+            transactionRepository.findAllByAccountId(id).forEach(e -> transactionRepository.deleteById(e.getId()));
             accountRepository.deleteById(id);
         }
     }

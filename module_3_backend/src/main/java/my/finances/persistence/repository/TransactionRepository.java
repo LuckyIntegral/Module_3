@@ -11,7 +11,4 @@ import java.util.Collection;
 public interface TransactionRepository extends BaseEntityRepository<Transaction> {
     @Query("from Transaction where account.id=:id")
     Collection<Transaction> findAllByAccountId(@PathParam("id") long id);
-
-    @Query("delete from Transaction t where t.account.id=:id")
-    void deleteAllByAccountId(@PathParam("id") long id);
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>About account</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Created
+                        </th>
+                        <th>
+                            Balance
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Owner id
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${account.accId}"></td>
+                        <td th:text="${account.accCreated}"></td>
+                        <td th:text="${account.balance}"></td>
+                        <td th:text="${account.name}"></td>
+                        <td th:text="${account.userId}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            Transactions
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Summa
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            More info
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="transaction : ${account.transactions}">
+                        <td th:text="${transaction.id}"></td>
+                        <td th:text="${transaction.amount}"></td>
+                        <td th:text="${transaction.type}"></td>
+                        <td>
+                            <a th:href="@{'/transactions/' + ${transaction.id} }" th:type="button" class="btn btn-dark">Details</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

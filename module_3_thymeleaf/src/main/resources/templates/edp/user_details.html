@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>
+                            About user
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            First name
+                        </th>
+                        <th>
+                            Last name
+                        </th>
+                        <th>
+                            Created
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${user_det.user.id}"></td>
+                        <td th:text="${user_det.user.firstName}"></td>
+                        <td th:text="${user_det.user.lastName}"></td>
+                        <td th:text="${user_det.user.created}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            Accounts
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Balance
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Transactions
+                        </th>
+                        <th>
+                            More info
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="acc : ${user_det.accounts}">
+                        <td th:text="${acc.id}"></td>
+                        <td th:text="${acc.balance}"></td>
+                        <td th:text="${acc.name}"></td>
+                        <td th:text="${acc.transactionNumber}"></td>
+                        <td>
+                            <a th:href="@{'/accounts/' + ${acc.id} }" th:type="button" class="btn btn-dark">Details</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

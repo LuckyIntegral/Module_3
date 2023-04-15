@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>About transaction</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td th:text="${transaction.id}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Created</th>
+                        <td th:text="${transaction.created}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Summa</th>
+                        <td th:text="${transaction.amount}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Type</th>
+                        <td th:text="${transaction.type}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Account</th>
+                        <td th:text="${transaction.accName}"></td>
+                        <td>
+                            <a th:href="@{'/accounts/' + ${transaction.accId} }" th:type="button" class="btn btn-dark">More info</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Created by</th>
+                        <td th:text="${transaction.ownerName}"></td>
+                        <td>
+                            <a th:href="@{'/users/' + ${transaction.ownerId} }" th:type="button" class="btn btn-dark">More info</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

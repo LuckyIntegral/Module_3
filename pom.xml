@@ -18,6 +18,7 @@
 
     <modules>
         <module>module_3_backend</module>
+        <module>module_3_thymeleaf</module>
     </modules>
 
     <properties>

@@ -2,7 +2,6 @@ package my.finances.api.impl;
 
 import my.finances.api.UserApiService;
 import my.finances.model.UserDetailsModel;
-import my.finances.model.UserModel;
 import my.finances.model.UserWithAccNumberModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;

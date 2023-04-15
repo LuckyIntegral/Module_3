@@ -2,7 +2,7 @@ package my.finances.controller;
 
 import lombok.AllArgsConstructor;
 import my.finances.dto.AccountShortInfo;
-import my.finances.dto.AccountWithTransactionNumberDTO;
+import my.finances.dto.AccountWithTransactionsDTO;
 import my.finances.facade.AccountFacade;
 import my.finances.facade.TransactionFacade;
 import my.finances.persistence.entity.Account;
@@ -40,7 +40,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountWithTransactionNumberDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<AccountWithTransactionsDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(accountFacade.findById(id));
     }
 

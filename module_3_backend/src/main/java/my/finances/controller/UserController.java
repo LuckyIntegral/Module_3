@@ -1,6 +1,7 @@
 package my.finances.controller;
 
 import lombok.AllArgsConstructor;
+import my.finances.dto.UserDetails;
 import my.finances.dto.UserWithAccountNumberDTO;
 import my.finances.facade.AccountFacade;
 import my.finances.facade.UserFacade;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserWithAccountNumberDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<UserDetails> findById(@PathVariable Long id) {
         return ResponseEntity.ok(userFacade.findById(id));
     }
 

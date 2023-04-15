@@ -2,7 +2,8 @@ package my.finances.facade.Impl;
 
 import lombok.AllArgsConstructor;
 import my.finances.dto.AccountShortInfo;
-import my.finances.dto.AccountWithTransactionNumberDTO;
+import my.finances.dto.AccountWithTransactionsDTO;
+import my.finances.dto.TransactionShortInfo;
 import my.finances.facade.AccountFacade;
 import my.finances.persistence.entity.Account;
 import my.finances.service.AccountService;
@@ -32,10 +33,13 @@ public class AccountFacadeImpl implements AccountFacade {
     }
 
     @Override
-    public AccountWithTransactionNumberDTO findById(long id) {
-        return new AccountWithTransactionNumberDTO(
+    public AccountWithTransactionsDTO findById(long id) {
+        return new AccountWithTransactionsDTO(
                 accountService.findById(id),
-                transactionService.findAllByAccountId(id).size()
+                transactionService.findAllByAccountId(id)
+                        .stream()
+                        .map(TransactionShortInfo::new)
+                        .toList()
         );
     }
 

@@ -1,10 +1,13 @@
 package my.finances.facade.Impl;
 
 import lombok.AllArgsConstructor;
+import my.finances.dto.AccountShortInfo;
+import my.finances.dto.UserDetails;
 import my.finances.dto.UserWithAccountNumberDTO;
 import my.finances.facade.UserFacade;
 import my.finances.persistence.entity.User;
 import my.finances.service.AccountService;
+import my.finances.service.TransactionService;
 import my.finances.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ public class UserFacadeImpl implements UserFacade {
 
     private final UserService userService;
     private final AccountService accountService;
+    private final TransactionService transactionService;
 
     @Override
     public void create(User entity) {
@@ -23,10 +27,13 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserWithAccountNumberDTO findById(long id) {
-        return new UserWithAccountNumberDTO(
+    public UserDetails findById(long id) {
+        return new UserDetails(
                 userService.findById(id),
-                accountService.findByUserId(id).size()
+                accountService.findByUserId(id)
+                        .stream()
+                        .map(e -> new AccountShortInfo(e, transactionService.findAllByAccountId(e.getId()).size()))
+                        .toList()
         );
     }
 

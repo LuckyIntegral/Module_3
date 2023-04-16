@@ -11,6 +11,7 @@
 <div layout:fragment="content">
     <div class="card">
         <div class="card-header">
+            <a th:href="@{'/users/' + ${user_det.user.id} + '/new'}" th:type="button" class="btn btn-dark">New account</a>
             <div class="row">
                 <table class="table table-striped">
                     <thead>

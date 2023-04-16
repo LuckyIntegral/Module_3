@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <h4>
+                Create User Menu
+            </h4>
+        </div>
+        <div class="card-body">
+            <form class="form-with-previewer" th:object="${user}" th:action="@{/users/new}"
+                  method="post" enctype="multipart/form-data">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="firstname"><b>First name</b></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="firstname" type="text" th:field="*{firstName}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="lastname"><b>Last name</b></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="lastname" type="text" th:field="*{lastName}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

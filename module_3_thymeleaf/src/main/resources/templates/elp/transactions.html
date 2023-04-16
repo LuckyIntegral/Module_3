@@ -11,38 +11,42 @@
 <div layout:fragment="content">
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Summa
-                    </th>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Account name
-                    </th>
-                    <th>
-                        More info
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="ttn : ${transactions}">
-                    <td th:text="${ttn.id}"></td>
-                    <td th:text="${ttn.amount}"></td>
-                    <td th:text="${ttn.type}"></td>
-                    <td th:text="${ttn.accName}"></td>
-                    <td>
-                        <a th:href="@{'/transactions/' + ${ttn.id} }" th:type="button" class="btn btn-dark">Details</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <a th:href="@{'/transactions/new'}" th:type="button" class="btn btn-dark">New transaction</a>
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Summa
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Account name
+                        </th>
+                        <th>
+                            More info
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ttn : ${transactions}">
+                        <td th:text="${ttn.id}"></td>
+                        <td th:text="${ttn.amount}"></td>
+                        <td th:text="${ttn.type}"></td>
+                        <td th:text="${ttn.accName}"></td>
+                        <td>
+                            <a th:href="@{'/transactions/' + ${ttn.id} }" th:type="button"
+                               class="btn btn-dark">Details</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

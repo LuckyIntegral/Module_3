@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <h4>
+                Create Transaction Menu
+            </h4>
+        </div>
+        <div class="card-body">
+            <form class="form-with-previewer" th:object="${transaction}" th:action="@{'/transactions/new'}"
+                  method="post" enctype="multipart/form-data">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="sender"><b>Sender account ID</b></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="sender" type="number" th:field="*{senderAccId}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="receiver"><b>Receiver account ID</b></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="receiver" type="number" th:field="*{receiverAccId}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="amount"><b>Summa</b></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="amount" type="number" th:field="*{amount}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <label for="desc"><b>Description</b></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="desc" type="text" th:field="*{description}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

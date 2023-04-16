@@ -2,7 +2,6 @@ package my.finances.api;
 
 import my.finances.model.AccountDetailsModel;
 import my.finances.model.AccountModel;
-import my.finances.model.AccountPostModel;
 
 import java.util.Collection;
 import java.util.Optional;

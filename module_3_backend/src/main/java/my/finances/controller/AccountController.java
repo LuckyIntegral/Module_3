@@ -19,13 +19,6 @@ import java.util.Collection;
 public class AccountController {
 
     private final AccountFacade accountFacade;
-    private final TransactionFacade transactionFacade;
-
-    @PostMapping("/{id}")
-    public ResponseEntity<Boolean> createTransaction(@RequestBody Transaction entity, @PathVariable Long id) {
-        transactionFacade.create(entity, id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(true);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Boolean> update(@RequestBody Account entity, @PathVariable Long id) {

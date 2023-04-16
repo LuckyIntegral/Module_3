@@ -1,6 +1,7 @@
 package my.finances.controller;
 
 import lombok.AllArgsConstructor;
+import my.finances.dto.UserCreatedDTO;
 import my.finances.dto.UserDetails;
 import my.finances.dto.UserWithAccountNumberDTO;
 import my.finances.facade.AccountFacade;
@@ -22,7 +23,7 @@ public class UserController {
     private final AccountFacade accountFacade;
 
     @PostMapping
-    public ResponseEntity<Boolean> create(@RequestBody User entity) {
+    public ResponseEntity<Boolean> create(@RequestBody UserCreatedDTO entity) {
         userFacade.create(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(true);
     }

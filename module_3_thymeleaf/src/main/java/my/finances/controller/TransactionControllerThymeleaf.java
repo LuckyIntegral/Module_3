@@ -2,17 +2,29 @@ package my.finances.controller;
 
 import lombok.AllArgsConstructor;
 import my.finances.api.TransactionApiService;
+import my.finances.model.TransactionPostModel;
+import my.finances.model.UserModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/transactions")
 public class TransactionControllerThymeleaf {
     private final TransactionApiService transactionApiService;
+
+    @GetMapping("/new")
+    public String createTransactionMenu(Model model) {
+        model.addAttribute("transaction", new TransactionPostModel());
+        return "nep/transaction_new";
+    }
+
+    @PostMapping("/new")
+    public String createUser(@ModelAttribute TransactionPostModel transaction) {
+        transactionApiService.create(transaction);
+        return "redirect:/transactions";
+    }
 
     @GetMapping
     public String findAll(Model model) {

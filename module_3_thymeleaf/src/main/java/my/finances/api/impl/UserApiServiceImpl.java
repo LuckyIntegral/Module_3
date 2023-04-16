@@ -1,7 +1,9 @@
 package my.finances.api.impl;
 
 import my.finances.api.UserApiService;
+import my.finances.model.AccountPostModel;
 import my.finances.model.UserDetailsModel;
+import my.finances.model.UserModel;
 import my.finances.model.UserWithAccNumberModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -18,6 +20,30 @@ import java.util.Optional;
 public class UserApiServiceImpl implements UserApiService {
     @Value("${finance.backend.api.url}")
     private String apiUrl;
+
+    @Override
+    public Boolean create(UserModel user) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                apiUrl + "/users",
+                HttpMethod.POST,
+                ResponseEntity.ok(user),
+                Boolean.class
+        );
+        return responseEntity.getBody();
+    }
+
+    @Override
+    public Boolean createAccount(AccountPostModel account, Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                apiUrl + "/users/" + id,
+                HttpMethod.POST,
+                ResponseEntity.ok(account),
+                Boolean.class
+        );
+        return responseEntity.getBody();
+    }
 
     @Override
     public Optional<UserDetailsModel> findById(Long id) {

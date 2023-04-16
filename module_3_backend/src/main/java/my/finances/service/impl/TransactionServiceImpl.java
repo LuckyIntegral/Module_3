@@ -1,63 +1,94 @@
 package my.finances.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
+
+import my.finances.dto.TransactionCreatedDTO;
 import my.finances.exception.InvalidDataException;
+import my.finances.persistence.entity.Account;
 import my.finances.persistence.entity.Transaction;
 import my.finances.persistence.repository.AccountRepository;
 import my.finances.persistence.repository.TransactionRepository;
 import my.finances.persistence.types.TransactionType;
-import my.finances.service.AccountService;
 import my.finances.service.TransactionService;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collection;
+import java.util.Objects;
 
 @Service
-@Transactional
 @AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
-    private final AccountService accountService;
 
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
-    public void create(Transaction entity, Long accId) {
-        if (accountRepository.findById(accId).isEmpty()) {
-            throw new EntityNotFoundException("Entity does not exist");
+    public void create(TransactionCreatedDTO transactionDTO) {
+        validateTransaction(transactionDTO);
+        Integer senderBalance = accountRepository.findById(transactionDTO.getSenderAccId()).get().getBalance();
+        Integer receiverBalance = accountRepository.findById(transactionDTO.getReceiverAccId()).get().getBalance();
+        Account sender = accountRepository.findById(transactionDTO.getSenderAccId())
+                .orElseThrow(() -> new EntityNotFoundException("Check your data and try again"));
+        Account receiver = accountRepository.findById(transactionDTO.getReceiverAccId())
+                .orElseThrow(() -> new EntityNotFoundException("Check your data and try again"));
+        Transaction transactionSender = new Transaction();
+        transactionSender.setAccount(sender);
+        transactionSender.setDescription(transactionDTO.getDescription());
+        transactionSender.setTransactionType(TransactionType.EXPENSE);
+        transactionSender.setAmount(transactionDTO.getAmount());
+        Transaction transactionReceiver = new Transaction();
+        transactionReceiver.setAccount(receiver);
+        transactionReceiver.setTransactionType(TransactionType.PROFIT);
+        transactionReceiver.setAmount(transactionDTO.getAmount());
+        transactionReceiver.setDescription("Replenishment from " +
+                sender.getOwner().getFirstName() + " " +
+                sender.getOwner().getLastName());
+        sender.setBalance(senderBalance - transactionDTO.getAmount());
+        receiver.setBalance(receiverBalance + transactionDTO.getAmount());
+        accountRepository.save(sender);
+        accountRepository.save(receiver);
+        transactionRepository.save(transactionSender);
+        transactionRepository.save(transactionReceiver);
+    }
+
+    private void validateTransaction(TransactionCreatedDTO transactionDTO) {
+        if (accountRepository.findById(transactionDTO.getSenderAccId()).isEmpty()) {
+            throw new EntityNotFoundException("Sender does not exist");
         }
-        entity.setAccount(accountRepository.findById(accId).get());
-        if (entity.getTransactionType() == null) {
-            throw new InvalidDataException("Invalid type");
+        if (accountRepository.findById(transactionDTO.getReceiverAccId()).isEmpty()) {
+            throw new EntityNotFoundException("Receiver does not exist");
         }
-        if (entity.getAmount() <= 0) {
+        if (Objects.equals(transactionDTO.getReceiverAccId(), transactionDTO.getSenderAccId())) {
+            throw new InvalidDataException("Invalid data");
+        }
+        if (transactionDTO.getAmount() <= 0) {
             throw new InvalidDataException("Invalid suma");
         }
-        if (entity.getTransactionType().equals(TransactionType.EXPENSE)) {
-            if (entity.getAccount().getBalance() < entity.getAmount()) {
-                throw new InvalidDataException("Insufficient funds");
-            }
-            entity.getAccount().setBalance(entity.getAccount().getBalance() - entity.getAmount());
-        } else {
-            entity.getAccount().setBalance(entity.getAccount().getBalance() + entity.getAmount());
+        if (accountRepository.findById(transactionDTO.getSenderAccId()).get().getBalance() < transactionDTO.getAmount()) {
+            throw new InvalidDataException("Insufficient funds");
         }
-        accountService.update(entity.getAccount(), entity.getAccount().getId());
-        transactionRepository.save(entity);
     }
 
     @Override
+    @Transactional
     public Transaction findById(Long id) {
         return transactionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity doesn't exist"));
     }
 
     @Override
+    @Transactional
     public Collection<Transaction> findAllByAccountId(long id) {
         return transactionRepository.findAllByAccountId(id);
     }
 
     @Override
+    @Transactional
     public Collection<Transaction> findAll() {
         return transactionRepository.findAll();
     }

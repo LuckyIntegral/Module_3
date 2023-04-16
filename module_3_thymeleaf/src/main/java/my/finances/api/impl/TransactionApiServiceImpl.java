@@ -3,6 +3,7 @@ package my.finances.api.impl;
 import my.finances.api.TransactionApiService;
 import my.finances.model.TransactionDetailsModel;
 import my.finances.model.TransactionModel;
+import my.finances.model.TransactionPostModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,18 @@ import java.util.Optional;
 public class TransactionApiServiceImpl implements TransactionApiService {
     @Value("${finance.backend.api.url}")
     private String apiUrl;
+
+    @Override
+    public Boolean create(TransactionPostModel transaction) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                apiUrl + "/transactions",
+                HttpMethod.POST,
+                ResponseEntity.ok(transaction),
+                Boolean.class
+        );
+        return responseEntity.getBody();
+    }
 
     @Override
     public Optional<TransactionDetailsModel> findById(Long id) {

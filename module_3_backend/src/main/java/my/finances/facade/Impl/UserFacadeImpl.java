@@ -2,6 +2,7 @@ package my.finances.facade.Impl;
 
 import lombok.AllArgsConstructor;
 import my.finances.dto.AccountShortInfo;
+import my.finances.dto.UserCreatedDTO;
 import my.finances.dto.UserDetails;
 import my.finances.dto.UserWithAccountNumberDTO;
 import my.finances.facade.UserFacade;
@@ -22,7 +23,7 @@ public class UserFacadeImpl implements UserFacade {
     private final TransactionService transactionService;
 
     @Override
-    public void create(User entity) {
+    public void create(UserCreatedDTO entity) {
         userService.create(entity);
     }
 

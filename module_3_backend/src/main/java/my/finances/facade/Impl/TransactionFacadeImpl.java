@@ -1,10 +1,10 @@
 package my.finances.facade.Impl;
 
 import lombok.AllArgsConstructor;
+import my.finances.dto.TransactionCreatedDTO;
 import my.finances.dto.TransactionDetails;
 import my.finances.dto.TransactionShortInfo;
 import my.finances.facade.TransactionFacade;
-import my.finances.persistence.entity.Transaction;
 import my.finances.service.TransactionService;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class TransactionFacadeImpl implements TransactionFacade {
     private final TransactionService transactionService;
 
     @Override
-    public void create(Transaction entity, Long accId) {
-        transactionService.create(entity, accId);
+    public void create(TransactionCreatedDTO transactionDTO) {
+        transactionService.create(transactionDTO);
     }
 
     @Override

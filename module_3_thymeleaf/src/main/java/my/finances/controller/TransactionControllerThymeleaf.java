@@ -3,7 +3,6 @@ package my.finances.controller;
 import lombok.AllArgsConstructor;
 import my.finances.api.TransactionApiService;
 import my.finances.model.TransactionPostModel;
-import my.finances.model.UserModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

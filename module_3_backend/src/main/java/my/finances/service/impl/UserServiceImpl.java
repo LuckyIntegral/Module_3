@@ -1,14 +1,18 @@
 package my.finances.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
+
+import my.finances.dto.UserCreatedDTO;
 import my.finances.exception.InvalidDataException;
 import my.finances.persistence.entity.User;
 import my.finances.persistence.repository.UserRepository;
 import my.finances.service.AccountService;
 import my.finances.service.UserService;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -21,9 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void create(User entity) {
-        validateUserEntity(entity);
-        userRepository.save(entity);
+    public void create(UserCreatedDTO entity) {
+        User user = new User();
+        user.setFirstName(entity.getFirstName());
+        user.setLastName(entity.getLastName());
+        validateUserEntity(user);
+        userRepository.save(user);
     }
 
     @Transactional

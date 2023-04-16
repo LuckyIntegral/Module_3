@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import my.finances.dto.AccountShortInfo;
 import my.finances.dto.AccountWithTransactionsDTO;
 import my.finances.facade.AccountFacade;
-import my.finances.facade.TransactionFacade;
 import my.finances.persistence.entity.Account;
-import my.finances.persistence.entity.Transaction;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

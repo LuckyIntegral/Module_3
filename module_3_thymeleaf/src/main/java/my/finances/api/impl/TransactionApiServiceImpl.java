@@ -23,32 +23,43 @@ public class TransactionApiServiceImpl implements TransactionApiService {
     @Override
     public Boolean create(TransactionPostModel transaction) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
-                apiUrl + "/transactions",
-                HttpMethod.POST,
-                ResponseEntity.ok(transaction),
-                Boolean.class
-        );
-        return responseEntity.getBody();
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                    apiUrl + "/transactions",
+                    HttpMethod.POST,
+                    ResponseEntity.ok(transaction),
+                    Boolean.class
+            );
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public Optional<TransactionDetailsModel> findById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<TransactionDetailsModel> responseEntity = restTemplate.exchange(
-                apiUrl + "/transactions/" + id,
-                HttpMethod.GET,
-                null,
-                TransactionDetailsModel.class
-        );
+        try {
+            ResponseEntity<TransactionDetailsModel> responseEntity = restTemplate.exchange(
+                    apiUrl + "/transactions/" + id,
+                    HttpMethod.GET,
+                    null,
+                    TransactionDetailsModel.class
+            );
 
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            TransactionDetailsModel transactionDetailsModel = responseEntity.getBody();
-            if (transactionDetailsModel != null) {
-                return Optional.of(transactionDetailsModel);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                TransactionDetailsModel transactionDetailsModel = responseEntity.getBody();
+                if (transactionDetailsModel != null) {
+                    return Optional.of(transactionDetailsModel);
+                }
             }
+            return Optional.empty();
+        } catch (Exception e) {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     @Override

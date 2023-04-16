@@ -22,20 +22,24 @@ public class AccountApiServiceImpl implements AccountApiService {
     @Override
     public Optional<AccountDetailsModel> findById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<AccountDetailsModel> responseEntity = restTemplate.exchange(
-                apiUrl + "/accounts/" + id,
-                HttpMethod.GET,
-                null,
-                AccountDetailsModel.class
-        );
+        try {
+            ResponseEntity<AccountDetailsModel> responseEntity = restTemplate.exchange(
+                    apiUrl + "/accounts/" + id,
+                    HttpMethod.GET,
+                    null,
+                    AccountDetailsModel.class
+            );
 
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            AccountDetailsModel accountDetailsModel = responseEntity.getBody();
-            if (accountDetailsModel != null) {
-                return Optional.of(accountDetailsModel);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                AccountDetailsModel accountDetailsModel = responseEntity.getBody();
+                if (accountDetailsModel != null) {
+                    return Optional.of(accountDetailsModel);
+                }
             }
+            return Optional.empty();
+        } catch (Exception e) {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     @Override

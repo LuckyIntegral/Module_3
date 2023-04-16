@@ -58,6 +58,9 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private void validateTransaction(TransactionCreatedDTO transactionDTO) {
+        if (transactionDTO.getSenderAccId() == null || transactionDTO.getReceiverAccId() == null) {
+            throw new EntityNotFoundException("Id == null");
+        }
         if (accountRepository.findById(transactionDTO.getSenderAccId()).isEmpty()) {
             throw new EntityNotFoundException("Sender does not exist");
         }

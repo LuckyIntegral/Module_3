@@ -24,44 +24,62 @@ public class UserApiServiceImpl implements UserApiService {
     @Override
     public Boolean create(UserModel user) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
-                apiUrl + "/users",
-                HttpMethod.POST,
-                ResponseEntity.ok(user),
-                Boolean.class
-        );
-        return responseEntity.getBody();
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                    apiUrl + "/users",
+                    HttpMethod.POST,
+                    ResponseEntity.ok(user),
+                    Boolean.class
+            );
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public Boolean createAccount(AccountPostModel account, Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
-                apiUrl + "/users/" + id,
-                HttpMethod.POST,
-                ResponseEntity.ok(account),
-                Boolean.class
-        );
-        return responseEntity.getBody();
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                    apiUrl + "/users/" + id,
+                    HttpMethod.POST,
+                    ResponseEntity.ok(account),
+                    Boolean.class
+            );
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public Optional<UserDetailsModel> findById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<UserDetailsModel> responseEntity = restTemplate.exchange(
-                apiUrl + "/users/" + id,
-                HttpMethod.GET,
-                null,
-                UserDetailsModel.class
-        );
+        try {
+            ResponseEntity<UserDetailsModel> responseEntity = restTemplate.exchange(
+                    apiUrl + "/users/" + id,
+                    HttpMethod.GET,
+                    null,
+                    UserDetailsModel.class
+            );
 
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            UserDetailsModel userModel = responseEntity.getBody();
-            if (userModel != null) {
-                return Optional.of(userModel);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                UserDetailsModel userModel = responseEntity.getBody();
+                if (userModel != null) {
+                    return Optional.of(userModel);
+                }
             }
+            return Optional.empty();
+        } catch (Exception e) {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     @Override

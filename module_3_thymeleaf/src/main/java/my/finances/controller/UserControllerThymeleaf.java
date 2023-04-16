@@ -23,7 +23,9 @@ public class UserControllerThymeleaf {
 
     @PostMapping("/new")
     public String createUser(@ModelAttribute UserModel user) {
-        userApiService.create(user);
+        if (!userApiService.create(user)) {
+            return "400";
+        }
         return "redirect:/users";
     }
 
@@ -36,7 +38,9 @@ public class UserControllerThymeleaf {
 
     @PostMapping("/{id}/new")
     public String createAccount(@PathVariable Long id, @ModelAttribute AccountPostModel account) {
-        userApiService.createAccount(account, id);
+        if (!userApiService.createAccount(account, id)) {
+            return "400";
+        }
         return "redirect:/users/" + id;
     }
 

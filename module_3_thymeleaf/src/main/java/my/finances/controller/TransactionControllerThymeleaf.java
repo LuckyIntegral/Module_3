@@ -21,7 +21,9 @@ public class TransactionControllerThymeleaf {
 
     @PostMapping("/new")
     public String createUser(@ModelAttribute TransactionPostModel transaction) {
-        transactionApiService.create(transaction);
+        if (!transactionApiService.create(transaction)) {
+            return "400";
+        }
         return "redirect:/transactions";
     }
 

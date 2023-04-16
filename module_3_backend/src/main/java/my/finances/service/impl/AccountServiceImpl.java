@@ -85,7 +85,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private void checkAccountData(Account entity) {
-        if (entity.getBalance() < 0) {
+        if (entity.getBalance() == null || entity.getBalance() < 0) {
             throw new InvalidDataException("Invalid balance number");
         }
         if (entity.getName() == null || entity.getName().equals("")) {

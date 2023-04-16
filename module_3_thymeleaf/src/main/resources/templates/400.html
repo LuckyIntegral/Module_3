@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            <h4>Invalid data</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <td>
+                        Follow these advices:
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        User can not be created without first name
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        User can not be created without last name
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        An account cannot be created without name
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        An account cannot be created with an empty or negative value
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        A sum of transaction cannot be created an empty or negative value
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        All IDs must be valid when creating a transaction
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -10,4 +10,6 @@ public interface TransactionFacade {
     void create(TransactionCreatedDTO transactionDTO);
     Collection<TransactionShortInfo> findAll();
     TransactionDetails findById(long id);
+    void exportByAccId(long id);
+    void exportAll();
 }

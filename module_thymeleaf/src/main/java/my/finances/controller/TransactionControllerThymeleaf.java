@@ -13,6 +13,18 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionControllerThymeleaf {
     private final TransactionApiService transactionApiService;
 
+    @GetMapping("/export/{id}")
+    public String exportByAccId(@PathVariable Long id) {
+        transactionApiService.exportByAccId(id);
+        return "export_done";
+    }
+
+    @GetMapping("/export")
+    public String exportAll() {
+        transactionApiService.exportAll();
+        return "export_done";
+    }
+
     @GetMapping("/new")
     public String createTransactionMenu(Model model) {
         model.addAttribute("transaction", new TransactionPostModel());

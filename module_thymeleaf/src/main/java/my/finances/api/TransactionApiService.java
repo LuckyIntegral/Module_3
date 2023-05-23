@@ -11,4 +11,6 @@ public interface TransactionApiService {
     Boolean create(TransactionPostModel transactionPostModel);
     Optional<TransactionDetailsModel> findById(Long id);
     Collection<TransactionModel> findAll();
+    void exportByAccId(long id);
+    void exportAll();
 }

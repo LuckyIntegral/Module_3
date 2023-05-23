@@ -18,6 +18,18 @@ public class TransactionController {
 
     private final TransactionFacade transactionFacade;
 
+    @PostMapping("/export")
+    public ResponseEntity<Boolean> exportAll() {
+        transactionFacade.exportAll();
+        return ResponseEntity.status(HttpStatus.OK).body(true);
+    }
+
+    @PostMapping("/export/{id}")
+    public ResponseEntity<Boolean> exportAll(@PathVariable Long id) {
+        transactionFacade.exportByAccId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
+    }
+
     @PostMapping
     public ResponseEntity<Boolean> create(@RequestBody TransactionCreatedDTO transactionDTO) {
         transactionFacade.create(transactionDTO);

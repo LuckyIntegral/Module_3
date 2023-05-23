@@ -1,5 +1,6 @@
 package my.finances.service.impl;
 
+import com.opencsv.CSVWriter;
 import jakarta.persistence.EntityNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -26,6 +29,38 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private static final String[] HEADER = {"Transaction ID", "Type", "Amount", "Account ID", "Description", "Created"};
+
+    @Transactional
+    public void exportByAccId(long id) {
+        if (accountRepository.findById(id).isEmpty())
+            throw new InvalidDataException("Invalid id");
+        makeCSV(transactionRepository.findAllByAccountId(id), id);
+    }
+
+    @Transactional
+    public void exportAll() {
+        makeCSV(transactionRepository.findAll(), -1);
+    }
+
+    private void makeCSV(Collection<Transaction> collection, long acc) {
+        String name = acc != -1 ? "Transactions_" + acc + ".csv" : "Transactions" + ".csv";
+        try (CSVWriter writer = new CSVWriter(new FileWriter(name))) {
+            writer.writeNext(HEADER);
+            collection.forEach(e -> {
+                        String[] strings = new String[6];
+                        strings[0] = Long.toString(e.getId());
+                        strings[1] = e.getTransactionType().toString();
+                        strings[2] = Integer.toString(e.getAmount());
+                        strings[3] = Long.toString(e.getAccount().getId());
+                        strings[4] = e.getDescription();
+                        strings[5] = e.getCreated().toString();
+                        writer.writeNext(strings);
+                    });
+        } catch (IOException e) {
+            throw new SecurityException(e);
+        }
+    }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override

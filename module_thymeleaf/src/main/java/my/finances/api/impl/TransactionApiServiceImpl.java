@@ -21,6 +21,40 @@ public class TransactionApiServiceImpl implements TransactionApiService {
     private String apiUrl;
 
     @Override
+    public void exportByAccId(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                    apiUrl + "/transactions/export/" + id,
+                    HttpMethod.POST,
+                    null,
+                    Boolean.class
+            );
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                responseEntity.getBody();
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void exportAll() {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                    apiUrl + "/transactions/export",
+                    HttpMethod.POST,
+                    null,
+                    Boolean.class
+            );
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                responseEntity.getBody();
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
     public Boolean create(TransactionPostModel transaction) {
         RestTemplate restTemplate = new RestTemplate();
         try {

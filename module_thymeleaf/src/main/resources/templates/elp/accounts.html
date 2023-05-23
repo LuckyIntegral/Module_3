@@ -33,6 +33,9 @@
                     <th>
                         More info
                     </th>
+                    <th>
+                        Transaction export
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +46,10 @@
                     <td th:text="${acc.owner}"></td>
                     <td th:text="${acc.transactionNumber}"></td>
                     <td>
-                        <a th:href="@{'/accounts/' + ${acc.id} }" th:type="button" class="btn btn-dark">Details</a>
+                        <a th:href="@{'/accounts/' + ${acc.id}}" th:type="button" class="btn btn-dark">Details</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-dark" th:href="@{'/transactions/export/' + ${acc.id}}">Export</a>
                     </td>
                 </tr>
                 </tbody>

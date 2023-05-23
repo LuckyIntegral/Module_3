@@ -27,6 +27,16 @@ public class TransactionFacadeImpl implements TransactionFacade {
     }
 
     @Override
+    public void exportByAccId(long id) {
+        transactionService.exportByAccId(id);
+    }
+
+    @Override
+    public void exportAll() {
+        transactionService.exportAll();
+    }
+
+    @Override
     public Collection<TransactionShortInfo> findAll() {
         return transactionService.findAll()
                 .stream()

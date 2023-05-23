@@ -19,4 +19,9 @@ public class ApiExceptionHandler {
     public ResponseEntity<String> handleInvalidDataException(InvalidDataException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
+
+    @ExceptionHandler({SecurityException.class})
+    public ResponseEntity<String> handleSecurityException(SecurityException exception) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(exception.getMessage());
+    }
 }

@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module_3_backend</artifactId>
+    <artifactId>module_backend</artifactId>
 
     <dependencies>
         <dependency>

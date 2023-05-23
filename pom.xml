@@ -10,11 +10,11 @@
     </parent>
 
     <groupId>my.finances</groupId>
-    <artifactId>module_3</artifactId>
+    <artifactId>My_finances</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>module_3</name>
-    <description>module_3</description>
+    <name>My_finances</name>
+    <description>My_finances</description>
 
     <modules>
         <module>module_backend</module>

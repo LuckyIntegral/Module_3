@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>my.finances</groupId>
-        <artifactId>module_3</artifactId>
+        <artifactId>My_finances</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
